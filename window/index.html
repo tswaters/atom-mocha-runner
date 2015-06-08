@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Mocha Runner</title>
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css"></style>
+    <link rel="stylesheet" href="vendor/fontawesome/css/font-awesome.css"></style>
+    <link rel="stylesheet" href="vendor/highlightjs/styles/github.css"></style>
+    <link rel="stylesheet" href="css/window.less"></style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="header">
+      </div>
+      <ul id="suites">
+      </ul>
+    </div>
+    <script>
+      // jquery is confused by 'require' being available, load it into window.
+      var $ = jQuery = require('./vendor/jquery/dist/jquery.min');
+    </script>
+    <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script>
+      // transitions for collapse work terribly in atom, disable.
+      $.fn.collapse.Constructor.TRANSITION_DURATION = 0;
+    </script>
+    <script src="js/window.js"></script>
+  </body>
+</html>

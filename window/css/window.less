@@ -1,0 +1,31 @@
+/*
+body {
+  background-color: black;
+}
+*/
+
+#suites, ul.panel, li.panel {
+  padding-left: 0;
+  list-style: none;
+}
+
+.error-message:empty, .error-stack:empty { display: none; }
+
+ul.children:not(:empty) { margin-top: 20px; }
+li.panel:last-child { margin-bottom: 0; }
+
+
+.glyphicon.spinning { -webkit-animation: spin 1s infinite linear; }
+@-webkit-keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.suite .label { margin-left: 5px; }
+
+.glyphicon { margin-right: 5px; }
+
+.test:not(.list-group-item-danger) .message-button,
+.test:not(.list-group-item-danger) .stack-button {
+  display: none;
+}

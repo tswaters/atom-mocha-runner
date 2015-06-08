@@ -1,0 +1,29 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals": {
+    "atom": false
+  },
+  "rules": {
+    "brace-style": [2, "stroustrup", { "allowSingleLine": true }],
+    "comma-style": [2],
+    "consistent-this": [0, "self"],
+    "global-strict": [2, "always"],
+    "no-extra-parens": [2, "always"],
+    "no-underscore-dangle": false,
+    "no-use-before-define": [2, "nofunc"],
+    "no-new": [0],
+    "quote-props": [2, "always"],
+    "quotes": [2, "single"],
+    "space-after-keywords": [2, "always", { "checkFunctionKeyword": true }],
+    "space-before-blocks": [2, "always"],
+    "valid-jsdoc": [2, {
+      "requireReturn": false,
+      "prefer": {
+        "return": "returns"
+      }
+    }]
+  }
+}

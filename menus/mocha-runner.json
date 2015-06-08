@@ -1,0 +1,18 @@
+{
+  "menu": [{
+    "label": "Packages",
+    "submenu": [{
+      "label": "Mocha Runner",
+      "submenu": [
+        {"label": "Run specs for current project directory", "command": "mocha-runner:run-specs"}
+      ]
+    }]
+  }, {
+    "label": "View",
+    "submenu": [
+      {"label": "Developer", "submenu": [
+        {"label": "Run Package Specs (Mocha)", "command": "mocha-runner:run-specs"}
+      ]}
+    ]
+  }]
+}
