@@ -55,4 +55,4 @@ interface to use.
 - [ ] verify `require` command works.
 
 
-![A screenshot of your package](https://github.com/tswaters/atom-mocha-runner/blob/master/screencast.gif)
+![A screenshot of your package](https://raw.githubusercontent.com/tswaters/atom-mocha-runner/master/screencast.gif)
