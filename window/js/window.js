@@ -56,8 +56,8 @@ function updateSuite (data, type) {
 
   if (type === 'suite end') {
     // update glyphicon for the entire suite
-    var icon = data.failures === 0 && data.pending === 0 ? 'ok'
-      : data.failures > 0 ? 'remove'
+    var icon = data.failures === 0 && data.pending === 0 && !data.hooksFailed ? 'ok'
+      : data.failures > 0 || data.hooksFailed ? 'remove'
       : data.pending > 0 ? 'pause' : 'reload';
 
     $('.suite-status', '#' + data.uuid)
@@ -69,11 +69,9 @@ function updateSuite (data, type) {
     $('.glyphicon.spinning', '#' + data.uuid)
       .removeClass('glyphicon-refresh spinning')
       .addClass('glyphicon-pause');
-
-    // if the afterAll hook went into error, update with error.
   }
 
-  if (data.failures > 0) {
+  if (data.failures > 0 || data.hooksFailed) {
     $('#' + data.uuid).removeClass('panel-default').addClass('panel-danger');
   }
 }
