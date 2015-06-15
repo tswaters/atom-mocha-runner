@@ -80,7 +80,3 @@ function updateSuite (data, type) {
 function compileTemplate(path) {
   return ejs.compile(fs.readFileSync(require.resolve(path)).toString());
 }
-
-/**
- * Collapse is dumb.
- */
