@@ -21,6 +21,7 @@ ipc.on('mocha-pending', function MochaPending (e) { updateSuite(e.parent, 'pendi
 ipc.on('mocha-pass', function MochaPass (e) { updateSuite(e.parent, 'pass'); updateTest(e); });
 ipc.on('mocha-fail', function MochaFail (e) { updateSuite(e.parent, 'fail'); updateTest(e); });
 ipc.on('mocha-end', function MochaEnd (e) { updateHeader(e); });
+ipc.on('mocha-stats', function MochaStats (e) { updateHeader(e); });
 
 function updateHeader (data) {
   $('#passes-value').html(data.passes);
