@@ -76,6 +76,6 @@ function updateSuite (data, type) {
   }
 }
 
-function compileTemplate(path) {
+function compileTemplate (path) {
   return ejs.compile(fs.readFileSync(require.resolve(path)).toString());
 }
