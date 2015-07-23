@@ -1,0 +1,8 @@
+--require should
+--recursive
+--ui bdd
+--check-leaks
+--timeout 2000
+--slow 100
+--no-exit
+test/fixtures/*.test.js
