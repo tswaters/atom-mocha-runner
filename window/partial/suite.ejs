@@ -59,9 +59,13 @@
           <span class="label label-default stack-button" data-toggle="collapse" data-target="#<%= test.uuid %> .error-stack">Stack</span>
         </div>
       </h5>
-      <code class="code collapse"><%- test.code %></code>
+      <div class="code collapse">
+        <pre><code class="hljs"><%- test.code %></code></pre>
+      </div>
       <p class="error-message text-danger"></p>
-      <pre class="error-stack collapse"></pre>
+      <div class="error-stack collapse">
+        <pre><code class="hljs"></code></pre>
+      </div>
     </li>
 
     <% }) %>

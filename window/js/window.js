@@ -44,7 +44,7 @@ function updateTest (data) {
   if (data.err) {
     $('#' + data.uuid).addClass('list-group-item-danger');
     $('.error-message', '#' + data.uuid).html(data.err.message);
-    $('.error-stack', '#' + data.uuid).html(data.err.stack);
+    $('.error-stack code', '#' + data.uuid).html(data.err.stack);
   }
 }
 
