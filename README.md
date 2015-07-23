@@ -1,58 +1,44 @@
 # mocha-runner package
 
-mocha-runner is an atom test runner that runs against mocha instead of jasmine.
+mocha-runner is an atom test runner inspired by [jasmine runner](https://github.com/nathansobo/atom-jasmine-runner/) and [mochawesome](https://github.com/adamgruber/mochawesome/).
 
-inspired by [jasmine runner](https://github.com/nathansobo/atom-jasmine-runner/) and [mochawesome](https://github.com/adamgruber/mochawesome/).
-
-respects mocha.opts and loads test results (asynchronously!) in a separate window, similar to the built in atom runner.
-
-respected mocha.opts / command line options are recognized :
-
-- ~~grep / fgrep / invert~~ (haven't tested this)
-- ~~ui~~ (haven't tested this)
-- bail
-- timeout
-- slow
-- ignoreLeaks
-- fullStackTrace
-- ~~useInlineDiffs~~ (this isn't implemented)
-- growl (unsure, I'm on Windows.)
+respects mocha.opts and loads test results (asynchronously!) in a separate window, similar to the built in atom package spec runner.
 
 use the runner with ctrl-alt-o
 
 ## Configuration
 
-the following configuration options are provided
+configuration must be passed to the runner by using mocha.opts in the test directory.
 
-### mocha-arguments
+the only configuration setting you can change is where the test directory is (default "test"). the options file will always be loaded as "mocha.opts" from this location.
 
-arguments to pass to mocha constructor (not all of those recognized by the command are recognized by the constructor)
+while it is possible to change where mocha loads it's configuration and what options to provide it, this package needs to use sane defaults until atom implements per-project configuration settings for packages (https://github.com/atom/atom/issues/5168).
 
-**default**: nothing.
+this includes any files that should be part of the test.  e.g.:
 
-### test-directory
+```
+--slow 500
+--no-timeouts
+--recursive
+--async-only
+test/unit/**/*.test.js
+```
 
-test directory to run against.
+the following options are not supported:
+- watch
+- watch-extensions
+- growl
+- node.exe command line args (everything defaults to what atom uses)
 
-**default**: test
+### opts
 
-### recursive
+where to load mocha.opts from
 
-whether to run recursively.
-
-**default**: true
-
-### interface
-
-interface to use.
-
-**default**: bdd
+**default**: test/mocha.opts
 
 ## TODO:
 
-- [ ] write tests (!!!).
-- [ ] verify other interfaces work.
-- [ ] verify `require` command works.
-
+- [ ] write tests (the irony is not lost on me).
+- [ ] support package specs... honestly, no idea where to even start :)
 
 ![A screenshot of your package](https://raw.githubusercontent.com/tswaters/atom-mocha-runner/master/screencast.gif)
