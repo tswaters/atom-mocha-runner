@@ -1,32 +1,32 @@
 <li id="<%= uuid %>" class="panel panel-default suite">
   <div class="panel-heading clearfix">
     <h4 class="panel-title" data-toggle="collapse" data-target="#<%= uuid %> > .panel-collapse">
-      <div class="pull-left btn-group suite-status">
+      <div data-uuid="<%= uuid %>" class="pull-left btn-group suite-status">
         <span class="glyphicon glyphicon-refresh spinning"></span>
       </div>
       <%= title %>
       <div class="pull-right btn-group">
         <span class="label label-default">
           <span class="glyphicon glyphicon-time"></span>
-          <span class="suite duration-value">
+          <span data-uuid="<%= uuid %>" class="duration-value">
             <span class="glyphicon glyphicon-refresh spinning"></span>
           </span>
         </span>
         <span class="label label-success">
           <span class="glyphicon glyphicon-ok"></span>
-          <span class="suite passing-value">
+          <span data-uuid="<%= uuid %>" class="passing-value">
             <span class="glyphicon glyphicon-refresh spinning"></span>
           </span>
         </span>
         <span class="label label-danger">
           <span class="glyphicon glyphicon-remove"></span>
-          <span class="suite failing-value">
+          <span data-uuid="<%= uuid %>" class="failing-value">
             <span class="glyphicon glyphicon-refresh spinning"></span>
           </span>
         </span>
         <span class="label label-primary">
           <span class="glyphicon glyphicon-pause"></span>
-          <span class="suite pending-value">
+          <span data-uuid="<%= uuid %>" class="pending-value">
             <%= pending %>
           </span>
         </span>
@@ -43,7 +43,7 @@
     <li id="<%= test.uuid %>" class="list-group-item test">
       <h5 class="list-group-item-heading">
         <div class="pull-left btn-group">
-          <span class="test result-value">
+          <span data-uuid="<%= test.uuid %>" class="result-value">
             <span class="glyphicon glyphicon-refresh spinning"></span>
           </span>
         </div>
@@ -51,7 +51,7 @@
         <div class="pull-right btn-group">
           <span class="label label-default">
             <span class="glyphicon glyphicon-time"></span>
-            <span class="test duration-value">
+            <span data-uuid="<%= test.uuid %>" class="duration-value">
               <span class="glyphicon glyphicon-refresh spinning"></span>
             </span>
           </span>
@@ -62,8 +62,8 @@
       <div class="code collapse">
         <pre><code class="hljs"><%- test.code %></code></pre>
       </div>
-      <p class="error-message text-danger"></p>
-      <div class="error-stack collapse">
+      <p data-uuid="<%= test.uuid %>" class="error-message text-danger"></p>
+      <div data-uuid="<%= test.uuid %>" class="error-stack collapse">
         <pre><code class="hljs"></code></pre>
       </div>
     </li>

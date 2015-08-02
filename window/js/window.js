@@ -12,6 +12,7 @@ var suitesUl = document.getElementById('suites');
 var header = compileTemplate('./partial/header.ejs');
 var suite = compileTemplate('./partial/suite.ejs');
 
+
 ipc.on('mocha-start', function MochaStart (e) { $(headerDiv).append(header(e)); updateHeader(e); });
 ipc.on('mocha-suite', function MochaSuite (e) { $(e.parent ? '#' + e.parent.uuid + ' > .children' : suitesUl).append(suite(e)); });
 ipc.on('mocha-suite-end', function MochaSuiteEnd (e) { updateSuite(e, 'suite end'); });
@@ -32,27 +33,27 @@ function updateHeader (data) {
 }
 
 function updateTest (data) {
-  $('.test.duration-value', '#' + data.uuid).html(data.duration);
+  $('.duration-value[data-uuid="' + data.uuid + '"]').html(data.duration);
 
   // update the icon based upon the status.
   var icon = data.fail ? 'remove' : data.pass ? 'ok' : 'pause';
-  $('.test.result-value', '#' + data.uuid)
+  $('.result-value[data-uuid="' + data.uuid + '"]')
     .find('.glyphicon')
     .removeClass('glyphicon-refresh spinning')
     .addClass('glyphicon-' + icon);
 
   if (data.err) {
     $('#' + data.uuid).addClass('list-group-item-danger');
-    $('.error-message', '#' + data.uuid).html(data.err.message);
-    $('.error-stack code', '#' + data.uuid).html(data.err.stack);
+    $('.error-message[data-uuid="' + data.uuid + '"]').html(data.err.message);
+    $('.error-stack[data-uuid="' + data.uuid + '"] code').html(data.err.stack);
   }
 }
 
 function updateSuite (data, type) {
-  $('.suite.duration-value', '#' + data.uuid).text(data.duration);
-  $('.suite.passing-value', '#' + data.uuid).text(data.passes);
-  $('.suite.failing-value', '#' + data.uuid).text(data.failures);
-  $('.suite.pending-value', '#' + data.uuid).text(data.pending);
+  $('.duration-value[data-uuid="' + data.uuid + '"]').text(data.duration);
+  $('.passing-value[data-uuid="' + data.uuid + '"]').text(data.passes);
+  $('.failing-value[data-uuid="' + data.uuid + '"]').text(data.failures);
+  $('.pending-value[data-uuid="' + data.uuid + ']').text(data.pending);
 
   if (type === 'suite end') {
     // update glyphicon for the entire suite
@@ -60,13 +61,13 @@ function updateSuite (data, type) {
       : data.failures > 0 || data.hooksFailed ? 'remove'
       : data.pending > 0 ? 'pause' : 'reload';
 
-    $('.suite-status', '#' + data.uuid)
+    $('.suite-status[data-uuid=' + data.uuid + ']')
       .find('.glyphicon')
       .removeClass('glyphicon-refresh spinning')
       .addClass('glyphicon-' + icon);
 
     // update glyphicon for each test still spinning (set to pause)
-    $('.glyphicon.spinning', '#' + data.uuid)
+    $('[data-uuid=' + data.uuid + '] .glyphicon.spinning')
       .removeClass('glyphicon-refresh spinning')
       .addClass('glyphicon-pause');
   }
