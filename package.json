@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "chai": "^3.0.0",
+    "eslint": "^1.2.1",
     "unit.js": "^2.0.0"
   }
 }

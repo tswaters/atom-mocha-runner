@@ -10,7 +10,7 @@
     "brace-style": [2, "stroustrup", { "allowSingleLine": true }],
     "comma-style": [2],
     "consistent-this": [0, "self"],
-    "global-strict": [2, "always"],
+    "strict": [2, "global"],
     "no-extra-parens": [2, "all"],
     "no-underscore-dangle": [0],
     "no-use-before-define": [2, "nofunc"],
@@ -18,7 +18,7 @@
     "quote-props": [2, "always"],
     "quotes": [2, "single"],
     "space-after-keywords": [2, "always"],
-    "space-before-function-parentheses": [2, "always"],
+    "space-before-function-paren": [2, "always"],
     "space-before-blocks": [2, "always"],
     "valid-jsdoc": [2, {
       "requireReturn": false,
@@ -26,5 +26,6 @@
         "return": "returns"
       }
     }]
-  }
+  },
+  "extends": "eslint:recommended"
 }
