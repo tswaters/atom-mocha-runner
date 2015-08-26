@@ -1,7 +1,7 @@
 {
   "name": "mocha-runner",
   "main": "./lib/main",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Run mocha tests",
   "keywords": [],
   "repository": "https://github.com/tswaters/atom-mocha-runner",
