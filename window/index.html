@@ -16,9 +16,9 @@
     </div>
     <script>
       // jquery is confused by 'require' being available, load it into window.
-      var $ = jQuery = require('./vendor/jquery/dist/jquery.min');
+      var $ = jQuery = require('jquery');
     </script>
-    <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script>
       // transitions for collapse work terribly in atom, disable.
       $.fn.collapse.Constructor.TRANSITION_DURATION = 0;
