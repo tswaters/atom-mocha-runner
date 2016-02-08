@@ -47,6 +47,25 @@ describe('nested describes', function () {
 
 });
 
+describe('nested describe failure', function () {
+  describe('nested describe 1', function () {
+    it('should have a failing test', function () {
+      assert.equal('life', 'easy');
+    });
+  });
+
+  describe('nested describe 2', function () {
+    it('should have one test', function () {
+      assert.equal(true, true);
+    });
+  });
+
+  it('should have one test', function () {
+    assert.equal(true, true);
+  });
+
+});
+
 describe('after hook fails', function () {
   after(function () {
     throw new Error('aw snap');

@@ -30,6 +30,9 @@ function updateHeader (data) {
   $('#pending-value').html(data.pending);
   $('#skipped-value').html(data.skipped || 0);
   $('#duration-value').html(data.duration);
+  $('.panel-default.suite:has(.panel-danger)')
+    .removeClass('panel-default')
+    .addClass('panel-danger')
 }
 
 function updateTest (data) {
