@@ -105,6 +105,13 @@ describe('another suite', function () {
     }, 1800);
   });
 
+  it('throws exception in an async test', function (done) {
+    setTimeout(function () {
+      assert.equal(true, false);
+      done();
+    }, 500);
+  });
+
   it('this one times out...', function (done) {
     setTimeout(function () {
       assert.equal(true, true);
