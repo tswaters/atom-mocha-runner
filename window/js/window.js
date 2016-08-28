@@ -2,7 +2,7 @@
 
 'use strict';
 
-var ipc = require('ipc');
+var ipc = require('electron').ipcRenderer;
 var ejs = require('ejs');
 var fs = require('fs');
 
@@ -12,17 +12,51 @@ var suitesUl = document.getElementById('suites');
 var header = compileTemplate('./partial/header.ejs');
 var suite = compileTemplate('./partial/suite.ejs');
 
+ipc.on('mocha', function handleMessage (event, message) {
 
-ipc.on('mocha-start', function MochaStart (e) { $(headerDiv).append(header(e)); updateHeader(e); });
-ipc.on('mocha-suite', function MochaSuite (e) { $(e.parent ? '#' + e.parent.uuid + ' > .children' : suitesUl).append(suite(e)); });
-ipc.on('mocha-suite-end', function MochaSuiteEnd (e) { updateSuite(e, 'suite end'); });
-ipc.on('mocha-test-end', function MochaTestEnd (e) { updateSuite(e.parent, 'test end'); updateTest(e); });
-ipc.on('mocha-hook-end', function MochaHookEnd (e) { updateSuite(e.parent, 'hook end'); updateTest(e); });
-ipc.on('mocha-pending', function MochaPending (e) { updateSuite(e.parent, 'pending'); updateTest(e); });
-ipc.on('mocha-pass', function MochaPass (e) { updateSuite(e.parent, 'pass'); updateTest(e); });
-ipc.on('mocha-fail', function MochaFail (e) { updateSuite(e.parent, 'fail'); updateTest(e); });
-ipc.on('mocha-end', function MochaEnd (e) { updateHeader(e); });
-ipc.on('mocha-stats', function MochaStats (e) { updateHeader(e); });
+  var data = message.data
+
+  // when starting, initialize the header
+  if (message.type === 'mocha-start') {
+    $(headerDiv).append(header(data));
+  }
+
+  // when starting a new suite, create a container to house results
+  // this is either an existing element (if message.parent present) or the root suites ul
+  if (message.type === 'mocha-suite') {
+    var parent = message.parent ? '#' + message.parent.uuid + '> .children' : suitesUl
+    $(parent).append(suite(data))
+  }
+
+  // when starting/finishing or receiving stats update the header with new stats
+  if ([
+    'mocha-start',
+    'mocha-end',
+    'mocha-stats'
+  ].indexOf(message.type) > -1) {
+    updateHeader(data)
+  }
+
+  // when results come back for a test,
+  // update the test and the parent describe block stats
+  if ([
+    'mocha-test-end',
+    'mocha-hook-end',
+    'mocha-pending',
+    'mocha-pass',
+    'moca-fail'
+  ].indexOf(message.type) > -1) {
+    updateSuite(data.parent)
+    updateTest(data)
+  }
+
+  // when the suite is finished, update its header with any failures
+  if (message.type === 'mocha-suite-end') {
+    updateSuite(data)
+    finishSuite(data)
+  }
+
+});
 
 function updateHeader (data) {
   $('#passes-value').html(data.passes);
@@ -52,32 +86,31 @@ function updateTest (data) {
   }
 }
 
-function updateSuite (data, type) {
+function updateSuite (data) {
   $('.duration-value[data-uuid="' + data.uuid + '"]').text(data.duration);
   $('.passing-value[data-uuid="' + data.uuid + '"]').text(data.passes);
   $('.failing-value[data-uuid="' + data.uuid + '"]').text(data.failures);
   $('.pending-value[data-uuid="' + data.uuid + ']').text(data.pending);
-
-  if (type === 'suite end') {
-    // update glyphicon for the entire suite
-    var icon = data.failures === 0 && data.pending === 0 && !data.hooksFailed ? 'ok'
-      : data.failures > 0 || data.hooksFailed ? 'remove'
-      : data.pending > 0 ? 'pause' : 'reload';
-
-    $('.suite-status[data-uuid=' + data.uuid + ']')
-      .find('.glyphicon')
-      .removeClass('glyphicon-refresh spinning')
-      .addClass('glyphicon-' + icon);
-
-    // update glyphicon for each test still spinning (set to pause)
-    $('[data-uuid=' + data.uuid + '] .glyphicon.spinning')
-      .removeClass('glyphicon-refresh spinning')
-      .addClass('glyphicon-pause');
-  }
-
   if (data.failures > 0 || data.hooksFailed) {
     $('#' + data.uuid).removeClass('panel-default').addClass('panel-danger');
   }
+}
+
+function finishSuite (data) {
+  // update glyphicon for the entire suite
+  var icon = data.failures === 0 && data.pending === 0 && !data.hooksFailed ? 'ok'
+    : data.failures > 0 || data.hooksFailed ? 'remove'
+    : data.pending > 0 ? 'pause' : 'reload';
+
+  $('.suite-status[data-uuid=' + data.uuid + ']')
+    .find('.glyphicon')
+    .removeClass('glyphicon-refresh spinning')
+    .addClass('glyphicon-' + icon);
+
+  // update glyphicon for each test still spinning (set to pause)
+  $('[data-uuid=' + data.uuid + '] .glyphicon.spinning')
+    .removeClass('glyphicon-refresh spinning')
+    .addClass('glyphicon-pause');
 }
 
 function compileTemplate (path) {
